@@ -1,0 +1,17 @@
+#map {
+    position:absolute; top:0; bottom:0;
+     /* width:500px; height: 500px; */
+     height:450px;
+     width:1300px;
+     background: #ababab; /* Just so we can see it */
+     position: absolute;
+     top: 450px;
+     right: 80px;  /* Put the left edge on the horizontal center */
+     margin-left: 148px; 
+}
+h5{
+    width: 35ch;
+}
+#id_Address{
+    font-size: smaller;
+}

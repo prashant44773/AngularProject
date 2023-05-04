@@ -1,0 +1,86 @@
+<div class="row backg box">
+  <!-- Here is the Email Validation  and OTP Validation-->
+
+  <div class="Login" *ngIf="GeneratePassWord()==false">
+    <!-- col s8 offset-s2 -->
+    <div class="card">
+      <div class="sm-jumbotron center-align cardTitle">
+        <h2 class="titleColor">Forgot Password</h2>
+      </div>
+      <form class="col s12 white" #emailOtp ="ngForm" >
+
+        <div class="row ExtraMargin" *ngIf="EmailValidation()">
+          <div class="input-field col">
+            <input class="validate" type="email" name="email" ngModel />
+            <label class="labelText">Enter Email</label>
+          </div>
+        </div>
+
+        <div class="row ExtraMargin" *ngIf="ValidateOTP()">
+          <div class="input-field col">
+            <input class="validate" type="password" name="otp" ngModel required minlength="6" />
+            <label class="labelText">Enter OTP</label>
+          </div>
+        </div>
+        <div class="row btnCenter">
+          <a class="forgot" routerLink="/BackToLogin">Back To LoginPage</a>
+        </div>
+
+        <!-- Buttons -->
+
+        <div class="row" *ngIf="EmailValidation()">
+          <div class="input-field col s12 btnCenter">
+            <button [disabled]="!emailOtp.valid" class="btn-large btn-submit" (click)="sendOtp(emailOtp)" type="button"> Send OTP</button>
+            
+          </div>
+        </div>
+
+        <div class="row" *ngIf="ValidateOTP()">
+          <div class="input-field col s12 btnCenter">
+            <button [disabled]="!emailOtp.valid" class="btn-large btn-submit" (click)="validateOtp(emailOtp)"  type="button">Validate</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Here is the Generate New Paswwords-->
+
+  <div class="Login" *ngIf="GeneratePassWord()">
+    <div class="card">
+      <div class="sm-jumbotron center-align cardTitle">
+        <h2 class="titleColor">Forgot Password</h2>
+      </div>
+      <form class="col s12 white" #generateNewPass="ngForm" >
+        <div class="row ExtraMargin">
+          <div class="input-field col">
+            <input class="validate" type="password" name="Password" ngModel required minlength="3" />
+            <label class="labelText">New Password</label>
+          </div>
+        </div>
+
+        <div class="row ExtraMargin">
+          <div class="input-field col">
+            <input class="validate" type="password" name="ConPassword" ngModel required minlength="3" />
+            <label class="labelText">Confirm Password</label>
+          </div>
+        </div>
+
+        <div class="row btnCenter">
+          <a class="forgot" routerLink="/BackToLogin">Back To LoginPage</a>
+        </div>
+
+        <!-- Buttons -->
+
+        <div class="row">
+          <div class="input-field col s12 btnCenter">
+            <button [disabled]="!generateNewPass.valid" class="btn-large btn-submit" (click)="ValidatePass(generateNewPass)" type="button"> Create</button>
+            <!-- <button class="btn-large btn-submit" type="submit">Submit</button> -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

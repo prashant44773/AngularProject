@@ -1,0 +1,67 @@
+<div class="d-flex align-items-center page_header">
+    <div>
+        <kendo-drawer-container>
+            <kendo-drawer #drawer mode="push" [(expanded)]="expanded">
+                <ng-template kendoDrawerTemplate>
+                    <ul>
+
+                        <li><button (click)="OnDashboardClick()">Dashboard</button></li>
+
+                        <ul *ngIf="ShowDashboard==true">
+                            <li><a href="operationalDashboard">Operational Dashboard</a></li>
+                            <li><a href="map">Central Dashboard</a></li>
+
+                        </ul>
+
+                        <li><button (click)="OnMasterClick()">Master Configuration</button></li>
+
+                        <ul *ngIf="ShowMaster==true" (click)="onSelect()">
+
+                            <li><a href="cityMaster">City Master</a></li>
+                            <li><a href="areaMaster">Area Master</a></li>
+                            <li><a href="parkingLot">Parking Lot Master</a></li>
+                            <li><a href="parkingSlot">Parking Slot Master</a></li>
+                            <li><a href="vehicleType">Vehicle Type Master</a></li>
+
+                            <li><a href="/device">Device Master</a></li>
+                            <li><a href="/pis">PIS Master</a></li>
+                            <li><a href="/faremaster">Fare Matrix</a></li>
+                            <li><a href="/sensor">Sensor Master</a></li>
+                            <li><a href="/gateway">Gate Way Master</a></li>
+                            <li><a href="/pass">Pass Details</a></li>
+                        </ul>
+
+                        <li><button (click)="OnUserClick()">User Management</button></li>
+
+                        <ul *ngIf="ShowUser==true">
+                            <li><a href="/userassignment"> User Assignment</a></li>
+                            <li><a href="/settingmaster">Setting Master</a></li>
+
+                            <li><a href="">User Master</a></li>
+                            <li><a href="">User Type Master</a></li>
+                            <li><a href="">Agencies</a></li>
+
+
+
+                        </ul>
+                    </ul>
+
+                </ng-template>
+            </kendo-drawer>
+
+            <kendo-drawer-content>
+
+                <button kendoButton (click)="drawer.toggle()" (click)="OnClick()">
+                    <i *ngIf="ShowOpen==true" class="bi bi-list fa-3x"></i>
+                    <i *ngIf="ShowClose==true" class="bi bi-x-lg fa-3x"></i>
+                </button>
+            </kendo-drawer-content>
+        </kendo-drawer-container>
+    </div>
+
+    <div>
+        <button kendoButton id="Logout"><a href="/login"> LoggedOut</a></button>
+        
+    </div>
+
+</div>

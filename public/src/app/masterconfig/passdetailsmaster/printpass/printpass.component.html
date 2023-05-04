@@ -1,0 +1,145 @@
+<div class="d-flex align-items-center page_header" style="padding-bottom:0px;">
+    <div class="page_title">
+        <h4><b>Owner Pass Print</b></h4>
+    </div>
+    <div class="container pop-up" id="popup"
+        style="width:40%;height:36px;margin-left: 20%;border-radius:5px;transition:0.5s;">
+        <div class="row">
+            <div class="col-sm-12">
+                <h6 id="msg" style="color:white;text-align: center;font-size:15px;margin-left: 0%;margin-top: 10px;">
+                </h6>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<table id="TblPass">
+    <tbody>
+        <tr style="border: none;">
+            <td
+                style="border-top: 1px solid black;padding:0 8px; border-left: 1px solid black; border-right: 1px solid black; text-align:center;">
+            </td>
+        </tr>
+
+        <tr>
+            <td
+                style="font-size: 100px; border-top: 1px solid black;padding:0 8px; border-left: 1px solid black; border-right: 1px solid black;">
+                <div style="text-align:center;width:250px;margin:auto">
+                    <ngx-qrcode [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value"
+                        alt="Demo QR Code">
+                    </ngx-qrcode>
+
+                </div>
+            </td>
+
+        </tr>
+        <tr>
+            <td
+                style=" font-size: 20px; border-top: 1px solid black;padding:0 8px; border-left: 1px solid black; border-right: 1px solid black; text-align:left;">
+                <br>
+
+                Owner's No : <strong>
+                    {{PrintPassDetails.passNo}}
+                    <br>
+                    Owner's Name : <strong>
+                        {{PrintPassDetails.strOwnerName}}
+                        <br>
+                        Owner's Mobile Number
+                        : <strong>
+                            {{PrintPassDetails.strOwnerMobileNo}}
+                            <br>
+                            Owner's Address: <strong> {{PrintPassDetails.passNo}}
+
+                            </strong></strong></strong></strong></td>
+        </tr>
+        <tr>
+            <td
+                style=" font-size: 20px; border-top: 1px solid black;padding:0 8px; border-left: 1px solid black; border-right: 1px solid black; text-align:left;">
+
+                Vehicle Registration Number
+                : <strong>
+                    {{PrintPassDetails.strVehicleregNo}}
+
+                    <br>
+                    Vehicle Make and Model
+                    : <strong>
+                        {{PrintPassDetails.strvehicleMakeModel}}
+
+                        <br>
+                        Vehicle Type: <strong> {{PrintPassDetails.strVehicleType_name}}
+
+                        </strong></strong></strong></td>
+        </tr>
+        <tr>
+            <td
+                style="border-top: 1px solid black;padding:0 8px; border-left: 1px solid black; border-right: 1px solid black;text-align:left;">
+                Pass Valid From
+                : <strong><span class="lead" style="font-size: 17px;"> {{PrintPassDetails.dtepassvalidfrom}}
+                    </span></strong>
+                <br>
+                Pass Valid Up to
+                : <strong>
+                    : <strong><span class="lead"
+                            style="font-size: 17px;">{{PrintPassDetails.dtepassvalidTo}}</span></strong>
+                    <br>
+                    Validity of Pass
+                    : <strong><span class="lead"
+                            style="font-size: 17px;">{{PrintPassDetails.strpassvalidity}}</span></strong>
+                    <br>
+                    Name of Parking Area
+
+                    : <strong><span class="lead"
+                            style="font-size: 17px;">{{PrintPassDetails.strParkingArea}}</span></strong>
+                    <br>
+                    Total Payable Amount
+                    : <strong><span class="lead"
+                            style="font-size: 17px;">{{PrintPassDetails.decTotalpayableAmount}}</span></strong>
+                    <br>
+
+                </strong></td>
+        </tr>
+        <tr>
+            <td
+                style="border-top: 1px solid black; padding: 0 8px; border-left: 1px solid black; border-right: 1px solid black;">
+
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Signature of Pass Issuer
+                                <br>
+                                <span style=" border-spacing: 0 15px;">&nbsp;</span>
+                                <br>
+                                <br>
+
+                            </td>
+                            <td style="padding-left:10px;">
+                                Signature of Pass holder
+                                <br>
+                                <span style=" border-spacing: 0 15px;">&nbsp;</span>
+                                <br>
+                                <br>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+
+
+            </td>
+
+
+        </tr>
+
+        <tr>
+            <td
+                style="border-left: 1px solid black; border-right: 1px solid black;padding:0 8px; border-bottom: 1px solid black; width: 40%;">
+            </td>
+        </tr>
+    </tbody>
+</table>

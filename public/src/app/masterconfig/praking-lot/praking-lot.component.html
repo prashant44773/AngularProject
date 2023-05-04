@@ -1,0 +1,160 @@
+<div class="d-flex align-items-center page_header">
+  <div class="page_title  min-wleftheader">
+      <h4><b>Lot Master</b></h4>
+  </div> 
+  <div>
+    <button kendoButton ><a href="/dashboard"> Go To Dashboard</a></button>
+  </div>
+</div>
+<div>
+
+<!-- <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-bootstrap/dist/all.css" /> -->
+
+<!-- <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-material/dist/all.css" /> -->
+
+<link
+  rel="stylesheet"
+  href="http://unpkg.com/@progress/kendo-theme-fluent/dist/all.css"
+/>
+
+<!-- <kendo-grid [data]="CityMasterGet">
+</kendo-grid> -->
+
+<kendo-grid
+  [data]="ParkingLotMasterGet"
+  (edit)="editHandler($event)"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler($event)"
+  (remove)="removeHandler($event)"
+  (add)="addHandler($event)"
+  [pageable]="true"
+  [sortable]="true"
+>
+  <ng-template kendoGridToolbarTemplate>
+
+    <button kendoGridPDFCommand>
+      <span class="k-icon k-i-file-pdf"></span>Export to PDF
+    </button>
+
+    <button type="button" kendoGridExcelCommand icon="file-excel">
+      Export to Excel
+    </button>
+
+    <button kendoGridAddCommand type="button" [primary]="true">Add New</button>
+
+  </ng-template>
+
+  <!-- Expoert To PDF -->
+
+  <kendo-grid-pdf
+    fileName="ParkingLotMaster.pdf"
+    [delay]="1000"
+    [allPages]="true"
+    paperSize="A4"
+    [repeatHeaders]="true"
+    [landscape]="true"
+  >
+    <kendo-grid-pdf-margin
+      top="1cm"
+      left="1cm"
+      right="1cm"
+      bottom="1cm"
+    ></kendo-grid-pdf-margin>
+    <ng-template
+      kendoGridPDFTemplate
+      let-pageNum="pageNum"
+      let-totalPages="totalPages"
+    >
+      <div class="page-template">
+        <div class="header">
+          <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+          <!-- Multi-page grid with automatic page breaking -->
+        </div>
+        <!-- <div class="footer">Page {{ pageNum }} of {{ totalPages }}</div> -->
+      </div>
+    </ng-template>
+    <kendo-grid-column field="strParkingLotName" title="Lot Name"></kendo-grid-column>
+    <kendo-grid-column field="strAddress" title="Lot Address"></kendo-grid-column>
+    <kendo-grid-column field="strCityName" title="City Name" ></kendo-grid-column>
+    <kendo-grid-column field="strAreaName" title="Area Name" ></kendo-grid-column>
+    <kendo-grid-column field="decLatitude" title="Latitude"></kendo-grid-column>
+    <kendo-grid-column field="decLongitude" title="Longitude"></kendo-grid-column>
+    <kendo-grid-column field="bActive" title="Status"></kendo-grid-column>
+  </kendo-grid-pdf>
+  <!-- Expoert To PDF -->
+
+  <!-- Export To Excel -->
+  <kendo-grid-excel fileName="ParkingLotMaster.xlsx"></kendo-grid-excel>
+  <!-- Export To Excel -->
+
+  <kendo-grid-column
+    field="strParkingLotName"
+    title="Lot Name"
+  ></kendo-grid-column>
+  <kendo-grid-column field="strAddress" title="Lot Address"></kendo-grid-column>
+
+  <!-- Adding DropDown Lists -->
+  <kendo-grid-column field="strCityName" title="City Name">
+    <ng-template kendoGridEditTemplate let-dataItem>
+      <kendo-dropdownlist
+        [data]="CityList"
+        [defaultItem]="CityList[0]"
+        [textField]="'name'"
+        [valueField]="'value'"
+        (valueChange)="CityValueFromDropdown($event)"
+      >
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column field="strAreaName" title="Area Name">
+    <ng-template kendoGridEditTemplate let-dataItem>
+      <kendo-dropdownlist
+        [data]="AreaList"
+        [defaultItem]="AreaList[0]"
+        [textField]="'name'"
+        [valueField]="'value'"
+        (valueChange)="AreaValueFromDropdown($event)"
+      >
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+  <!-- Adding DropDown Lists -->
+
+  <!-- <kendo-grid-column field="strAreaName" title="Area Name"></kendo-grid-column> -->
+
+  <!-- Show Only ON Add and Edit -->
+  <kendo-grid-column field="decLatitude" title="Latitude"></kendo-grid-column>
+
+  <kendo-grid-column field="decLongitude" title="Longitude"></kendo-grid-column>
+  <!-- Show Only ON Add and Edit -->
+
+  <kendo-grid-column field="bActive" title="Active(Status)"></kendo-grid-column>
+
+  <kendo-grid-column title="Action">
+    <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+      <button kendoButton (click)="Action(dataItem)" *ngIf="dataItem.bActive">
+        Click To DeActivate
+      </button>
+      <button
+        kendoButton
+        (click)="Action(dataItem)"
+        *ngIf="dataItem.bActive == false"
+      >
+        Click To Activate
+      </button>
+      <!-- more command buttons here -->
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-command-column title="Command">
+    <ng-template kendoGridCellTemplate>
+      <button kendoGridEditCommand>Edit</button>
+      <button kendoGridSaveCommand>Save</button>
+      <button kendoGridRemoveCommand>Delete</button>
+      <button kendoGridCancelCommand class="btnDel">Cancel</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>
+
+<router-outlet></router-outlet>

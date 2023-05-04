@@ -1,0 +1,142 @@
+
+<div class="d-flex align-items-center page_header">
+    <div class="page_title  min-wleftheader">
+        <h4><b>Sensor Master</b></h4>
+    </div> 
+    <div>
+        <button kendoButton ><a href="/dashboard"> Go To Dashboard</a></button>
+      </div>
+  </div>
+<kendo-grid [kendoGridBinding]="gridData" [pageable]="true" [pageSize]="10" [sortable]="true" [groupable]="true"
+    (dataStateChange)="onStateChange()" (add)="addHandler($event)" (edit)="editHandler($event)"
+    (cancel)="cancelHandler($event)" (save)="saveHandler($event)" (remove)="removeHandler($event)" [navigable]="true">
+    <ng-template kendoGridToolbarTemplate>
+        <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+        <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+        <button kendoGridAddCommand>Add new</button>
+    </ng-template>
+
+    <kendo-grid-column field="strParkingLotName" editor="text" title="Lot Name">
+        <ng-template kendoGridEditTemplate>
+            <kendo-dropdownlist [data]="LotList" [value]="selectedLot" [defaultItem]="defaultLot"
+              textField="strParkingLotName" valueField="tParkLotID')" (valueChange)="handleLotChange($event)">
+            </kendo-dropdownlist>
+          </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="intSensorParkingSlot" editor="numeric" title="Slot Id"></kendo-grid-column>
+    <kendo-grid-column field="strSlotName" editor="text" title="Slot Name"></kendo-grid-column>
+    <kendo-grid-column field="strDevEUI" editor="text" title="DecEUI"></kendo-grid-column>
+    <kendo-grid-column field="strDeviceName" editor="text" title="Device Name"></kendo-grid-column>
+    <kendo-grid-column field="intApplicationID" editor="numeric" title="Application ID"></kendo-grid-column>
+    <kendo-grid-column field="strApplicationName" editor="text" title="Application Name"></kendo-grid-column>
+    <kendo-grid-column field="agencyname" editor="text" title="Agency Name"></kendo-grid-column>
+    <kendo-grid-column field="strVehicleType" editor="text" title="Vehicle Type">
+        <ng-template kendoGridEditTemplate>
+            <kendo-dropdownlist [data]="dataVehicle" [value]="selectedType" [defaultItem]="defaultVehicleType"
+              textField="vehicleType" valueField="vehicleTypeID" (valueChange)="handleCategoryChange($event)">
+            </kendo-dropdownlist>
+          </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="strGatewayID" editor="text" title="Gateway ID"></kendo-grid-column>
+    <kendo-grid-column field="decLatitude" editor="numeric" title="Latitude"></kendo-grid-column>
+    <kendo-grid-column field="decLongitude" editor="numeric" title="Longitude"></kendo-grid-column>
+    <kendo-grid-column field="strpisdetails" editor="text" title="PIS Details">
+        <!-- <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+            <kendo-multiselect
+              [data]="categories"
+              [(ngModel)]="selectedValues"  
+              textField="strPISDeviceID"
+              valueField="intPISMasterID"
+            ></kendo-multiselect>
+            {{ category(dataItem.intParkingLotID)?.strPISDeviceID }}
+          </ng-template> -->
+    </kendo-grid-column>
+
+
+    <kendo-grid-column [field]="'Status'">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span>{{dataItem.bDeactivated? "Active" : "Deactive"}}</span>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [field]="'Button'">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <button kendoButton
+                (click)="ActivateDeActivate(dataItem)">{{ dataItem.bActive ? 'Click To Deactivate' : 'Click To Activate' }}</button>
+        </ng-template>
+    </kendo-grid-column>
+
+
+    <kendo-grid-excel fileName="SENSOR.xlsx">
+
+        <!-- <kendo-excelexport-column field="strPISDeviceID" editor="text" title="PIS Device"></kendo-excelexport-column> -->
+
+        <kendo-excelexport-column field="strParkingLotName" editor="text" title="PIS Device"></kendo-excelexport-column>
+        <kendo-excelexport-column field="intSensorParkingSlot" editor="text" title="PIS IMEI">
+        </kendo-excelexport-column>
+        <kendo-excelexport-column field="strSlotName" editor="text" title="PIS Make"></kendo-excelexport-column>
+        <kendo-excelexport-column field="strDevEUI" editor="text" title="PIS Model"></kendo-excelexport-column>
+        <kendo-excelexport-column field="strDeviceName" editor="text" title="PIS Seq ID"></kendo-excelexport-column>
+        <kendo-excelexport-column field="intApplicationID" editor="text" title="Warranty Start Date">
+        </kendo-excelexport-column>
+        <kendo-excelexport-column field="strApplicationName" editor="text" title="Warranty End Date">
+        </kendo-excelexport-column>
+        <kendo-excelexport-column field="agencyname" editor="text" title="PIS Sim Number"></kendo-excelexport-column>
+        <kendo-excelexport-column field="strVehicleType" editor="text" title="PIS Sim Number">
+        </kendo-excelexport-column>
+        <kendo-excelexport-column field="strGatewayID" editor="text" title="PIS Sim Number"></kendo-excelexport-column>
+        <kendo-excelexport-column field="decLatitude" editor="text" title="PIS Sim Number"></kendo-excelexport-column>
+        <kendo-excelexport-column field="decLongitude" editor="text" title="PIS Sim Number"></kendo-excelexport-column>
+        <kendo-excelexport-column field="strpisdetails" editor="text" title="PIS Sim Number"></kendo-excelexport-column>
+
+
+        <kendo-excelexport-column [field]="'Status'">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <span>{{dataItem.bDeactivated? "Active" : "Deactive"}}</span>
+            </ng-template>
+        </kendo-excelexport-column>
+
+
+    </kendo-grid-excel>
+    <kendo-grid-pdf fileName="SENSOR.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+
+        <kendo-grid-column field="strParkingLotName" editor="text" title="Lot Name"></kendo-grid-column>
+        <kendo-grid-column field="intSensorParkingSlot" editor="text" title="Slot Id"></kendo-grid-column>
+        <kendo-grid-column field="strSlotName" editor="text" title="Slot Name"></kendo-grid-column>
+        <kendo-grid-column field="strDevEUI" editor="text" title="DecEUI"></kendo-grid-column>
+        <kendo-grid-column field="strDeviceName" editor="text" title="Device Name"></kendo-grid-column>
+        <kendo-grid-column field="intApplicationID" editor="text" title="Application ID"></kendo-grid-column>
+        <kendo-grid-column field="strApplicationName" editor="text" title="Application Name"></kendo-grid-column>
+        <kendo-grid-column field="agencyname" editor="text" title="Agency Name"></kendo-grid-column>
+        <kendo-grid-column field="strVehicleType" editor="text" title="Vehicle Tyoe"></kendo-grid-column>
+        <kendo-grid-column field="strGatewayID" editor="text" title="Gateway ID"></kendo-grid-column>
+        <kendo-grid-column field="decLatitude" editor="text" title="Latitude"></kendo-grid-column>
+        <kendo-grid-column field="decLongitude" editor="text" title="Longitude"></kendo-grid-column>
+        <kendo-grid-column field="strpisdetails" editor="text" title="PIS Details"></kendo-grid-column>
+
+        <kendo-grid-column [field]="'Status'">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <span>{{dataItem.bDeactivated? "Active" : "Deactive"}}</span>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+        <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+            <div class="page-template">
+                <div class="header">
+                    <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+
+                </div>
+
+            </div>
+        </ng-template>
+
+    </kendo-grid-pdf>
+    <kendo-grid-command-column title="command" [width]="220">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <button kendoGridEditCommand [primary]="true">Edit</button>
+            <!-- <button kendoGridRemoveCommand>Remove</button> -->
+            <!-- <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button> -->
+            <button kendoGridSaveCommand>{{ isNew ? 'Add' : 'Update' }}</button>
+            <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+        </ng-template>
+    </kendo-grid-command-column>
+</kendo-grid>

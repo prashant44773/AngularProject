@@ -1,0 +1,10 @@
+kendo-chart{
+    position:absolute; top:0; bottom:0;
+    /* width:500px; height: 500px; */
+    margin-right: 10ch;
+    background: #ababab; /* Just so we can see it */
+    position: absolute;
+    top: 0px;
+    /* Put the left edge on the horizontal center */
+    
+}

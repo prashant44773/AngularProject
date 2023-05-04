@@ -1,0 +1,103 @@
+<!-- <kendo-grid [data]="view | async">
+  <kendo-grid-column field="intDeviceID" title="ID"></kendo-grid-column>
+      <kendo-grid-column field="strDeviceNo" title="Device No"></kendo-grid-column>
+      <kendo-grid-column field="strDeviceModel" title="Device Model"></kendo-grid-column>
+      <kendo-grid-column field="strDeviceToken" title="Device Token"></kendo-grid-column>
+      <kendo-grid-column field="intParkingLotID" title="Parking Lot Id"></kendo-grid-column>
+      <kendo-grid-column field="strETMDeviceWarrantyStartDate" title="Warranty Start Date"></kendo-grid-column>
+      <kendo-grid-column field="strETMDeviceWarrantyEndDate" title="Warranty End Date"></kendo-grid-column>
+</kendo-grid> -->
+<!-- <kendo-button icon="calendar">Events</kendo-button> -->
+<!-- <button class="btn-large btn-submit" (click)="getList()" type="button"> Create</button> -->
+<!-- <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-material/dist/all.css" /> -->
+<!-- <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-bootstrap/dist/all.css" /> -->
+
+<div class="d-flex align-items-center page_header">
+  <div class="page_title  min-wleftheader">    
+      <h4><a href="/dashboard"></a> <b>Device Master</b></h4>
+  </div> 
+  <div>
+    <button kendoButton ><a href="/dashboard"> Go To Dashboard</a></button>
+  </div>
+</div>
+<kendo-grid [kendoGridBinding]="gridData" [pageable]="true" [pageSize]="10" [sortable]="true" [groupable]="true"
+  (dataStateChange)="onStateChange()" (add)="addHandler($event)" (edit)="editHandler($event)"
+  (cancel)="cancelHandler($event)" (save)="saveHandler($event)" (remove)="removeHandler($event)" [navigable]="true">
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+    <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+    <button kendoGridAddCommand>Add new</button>
+  </ng-template>
+  <!-- <kendo-grid-column field="intDeviceID" editor="text" title="ID"></kendo-grid-column> -->
+  <kendo-grid-column field="strDeviceNo" editor="text" title="Device No"></kendo-grid-column>
+  <kendo-grid-column field="strDeviceModel" editor="text" title="Device Model"></kendo-grid-column>
+  <kendo-grid-column field="strDeviceToken" editor="text" title="Device Token"></kendo-grid-column>
+  <kendo-grid-column field="strETMSimNumber" editor="text" title="Sim Number"></kendo-grid-column>
+  <kendo-grid-column field="strETMDeviceWarrantyStartDate" editor="text" title="Warranty Start Date">
+  </kendo-grid-column>
+  <kendo-grid-column field="strETMDeviceWarrantyEndDate" editor="text" title="Warranty End Date"></kendo-grid-column>
+  <kendo-grid-column [field]="'Status'">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <span>{{dataItem.bActive? "Active" : "Deactive"}}</span>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [field]="'Button'">
+
+
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <button kendoButton
+        (click)="ActivateDeActivate(dataItem)">{{ dataItem.bActive ? 'Click To Deactivate' : 'Click To Activate' }}</button>
+    </ng-template>
+
+
+  </kendo-grid-column>
+  <kendo-grid-column field="strRemarks" editor="text" title="Remarks"></kendo-grid-column>
+
+  <kendo-grid-excel fileName="ETMDevice.xlsx">
+
+    <kendo-excelexport-column field="strDeviceNo" title="Device No"></kendo-excelexport-column>
+    <kendo-excelexport-column field="strDeviceModel" title="Device Model"></kendo-excelexport-column>
+    <kendo-excelexport-column field="strDeviceToken" title="Device Token"></kendo-excelexport-column>
+    <kendo-excelexport-column field="strETMSimNumber" title="Sim Number"></kendo-excelexport-column>
+    <kendo-excelexport-column field="strETMDeviceWarrantyStartDate" title="Warranty Start Date"></kendo-excelexport-column>
+    <kendo-excelexport-column field="strETMDeviceWarrantyEndDate" title="Warranty End Date"></kendo-excelexport-column>
+    <kendo-excelexport-column [field]="'Status'">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{dataItem.bActive? "Active" : "Deactive"}}</span>
+      </ng-template>
+    </kendo-excelexport-column>
+    <kendo-excelexport-column field="strRemarks" title="Remarks"></kendo-excelexport-column>
+  </kendo-grid-excel>
+
+  <kendo-grid-pdf fileName="ETMDevice.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+    <kendo-grid-column field="strDeviceNo" title="Device No"></kendo-grid-column>
+    <kendo-grid-column field="strDeviceModel" title="Device Model"></kendo-grid-column>
+    <kendo-grid-column field="strDeviceToken" title="Device Token"></kendo-grid-column>
+    <kendo-grid-column field="strETMSimNumber" title="Sim Number"></kendo-grid-column>
+    <kendo-grid-column field="strETMDeviceWarrantyStartDate" title="Warranty Start Date"></kendo-grid-column>
+    <kendo-grid-column field="strETMDeviceWarrantyEndDate" title="Warranty End Date"></kendo-grid-column>
+    <kendo-grid-column [field]="'Status'">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{dataItem.bActive? "Active" : "Deactive"}}</span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="strRemarks" title="Remarks"></kendo-grid-column>
+    <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+    <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+      <div class="page-template">
+        <div class="header">
+          <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+        </div>
+      </div>
+    </ng-template>
+  </kendo-grid-pdf>
+  <kendo-grid-command-column title="command" [width]="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridEditCommand [primary]="true">Edit</button>
+      <button kendoGridRemoveCommand>Remove</button>
+      <!-- <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button> -->
+      <button kendoGridSaveCommand>{{ isNew ? 'Add' : 'Update' }}</button>
+      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>

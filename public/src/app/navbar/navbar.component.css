@@ -1,0 +1,36 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+app-dashboard {
+    padding: 0;
+}
+kendo-drawer{
+    z-index: 1000000;
+}
+
+
+kendo-drawer-content {
+    
+    padding: 20px;
+    
+    z-index: 200000000000;
+}
+
+kendo-drawer-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+b{
+    font-size: 4ch;
+}
+#Logout{
+    margin-top: 1ch;
+    margin-right: 3ch ;
+}
+.d-flex{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

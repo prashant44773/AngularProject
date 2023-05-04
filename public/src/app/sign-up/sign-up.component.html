@@ -1,0 +1,38 @@
+
+<div class="row backg box">
+  <div class="Login">  <!-- col s8 offset-s2 -->
+    <div class="card">
+      <div class="sm-jumbotron center-align cardTitle">
+        <h2 class="titleColor">Goa Smart Parking</h2>
+      </div>
+      <form class="col s12 white" #userRegistrationForm="ngForm" (ngSubmit)="OnSubmit(userRegistrationForm)">
+        <div class="row">
+          <div class="input-field col">
+            <input id="user" class="validate" type="text" name="UserName" #UserName="ngModel" [(ngModel)]="user.UserName" required>
+            <label data-error="Required field!">UserName</label>
+          </div>
+
+        </div>
+        <!-- <h1>{{encrypted}}</h1> -->
+        <div class="row">
+          <div class="input-field col">
+            <!-- <input (change)="onChange($event)" id="pass"  class="validate" value={{encrypted}} type="password" name="Password" #Password="ngModel" [(ngModel)]="user.Password" required  minlength="3"> -->
+            <input id="pass"  class="validate" value={{encrypted}} type="password" name="Password" #Password="ngModel" [(ngModel)]="user.Password" required  minlength="3">
+            <label >Password</label>
+          </div>
+        </div>
+        <div class="row btnCenter">
+              <a class="forgot" routerLink="/forgot">Forgot Password ?</a>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 btnCenter">
+              <button [disabled]="!userRegistrationForm.valid" class="btn-large btn-submit" type="submit">Submit</button>
+              <!-- <button class="btn-large btn-submit" type="submit">Submit</button> -->
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

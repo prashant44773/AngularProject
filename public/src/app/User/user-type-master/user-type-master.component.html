@@ -1,0 +1,135 @@
+<h1>Hello this is User Type Master</h1>
+
+<!-- <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-bootstrap/dist/all.css" /> -->
+
+<!-- <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-material/dist/all.css" /> -->
+
+<link
+  rel="stylesheet"
+  href="http://unpkg.com/@progress/kendo-theme-fluent/dist/all.css"
+/>
+
+<!-- <kendo-grid [data]="CityMasterGet">
+</kendo-grid> -->
+
+<kendo-grid
+  [data]="UserTypeMasterGet"
+  (edit)="editHandler($event)"
+  (save)="saveHandler($event)"
+  (cancel)="cancelHandler($event)"
+  (remove)="removeHandler($event)"
+  (add)="addHandler($event)"
+  [pageable]="true"
+  [sortable]="true"
+>
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridAddCommand type="button" [primary]="true">Add New</button>
+
+    <button kendoGridPDFCommand>
+      <span class="k-icon k-i-file-pdf"></span>Export to PDF
+    </button>
+
+    <button type="button" kendoGridExcelCommand icon="file-excel">
+      Export to Excel
+    </button>
+  </ng-template>
+
+  <!-- Expoert To PDF -->
+
+  <kendo-grid-pdf
+    fileName="UserTypeMaster.pdf"
+    [delay]="1000"
+    [allPages]="true"
+    paperSize="A4"
+    [repeatHeaders]="true"
+    [landscape]="true"
+  >
+    <kendo-grid-pdf-margin
+      top="1cm"
+      left="1cm"
+      right="1cm"
+      bottom="1cm"
+    ></kendo-grid-pdf-margin>
+    <ng-template
+      kendoGridPDFTemplate
+      let-pageNum="pageNum"
+      let-totalPages="totalPages"
+    >
+      <div class="page-template">
+        <div class="header">
+          <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+          <!-- Multi-page grid with automatic page breaking -->
+        </div>
+        <!-- <div class="footer">Page {{ pageNum }} of {{ totalPages }}</div> -->
+      </div>
+    </ng-template>
+    <kendo-grid-column
+      field="strUserType"
+      title="User Type"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      field="bAllowModifications"
+      title="Allow Modifications"
+    ></kendo-grid-column>
+    <kendo-grid-column field="bActive" title="Status"></kendo-grid-column>
+  </kendo-grid-pdf>
+  <!-- Expoert To PDF -->
+
+  <!-- Export To Excel -->
+  <kendo-grid-excel fileName="UserTypeMaster.xlsx"></kendo-grid-excel>
+  <!-- Export To Excel -->
+
+  <!-- <kendo-grid-column field="strUserName" title="User Name"></kendo-grid-column> -->
+  <kendo-grid-column field="strUserType" title="User Type"></kendo-grid-column>
+  <kendo-grid-column field="bAllowModifications" title="Allow Modifications">
+      <ng-template kendoGridEditTemplate let-dataItem="dataItem" >
+        <button kendoButton (click)="AllowModificatios(dataItem)" *ngIf="dataItem.bAllowModifications">
+          Don't Allow Modifictaions
+        </button>
+        <button
+          kendoButton
+          (click)="AllowModificatios(dataItem)"
+          *ngIf="dataItem.bAllowModifications == false"
+        >
+          Allow Modifictaions
+        </button>
+        <!-- more command buttons here -->
+      </ng-template>
+
+  </kendo-grid-column>
+
+
+  <kendo-grid-column
+    field="bActive"
+    title="Active(Status)"
+    [editable]="false"
+  ></kendo-grid-column>
+
+  <kendo-grid-column title="Action">
+    <ng-template kendoGridCellTemplate let-dataItem="dataItem">
+      <button kendoButton (click)="Action(dataItem)" *ngIf="dataItem.bActive">
+        Click To DeActivate
+      </button>
+      <button
+        kendoButton
+        (click)="Action(dataItem)"
+        *ngIf="dataItem.bActive == false"
+      >
+        Click To Activate
+      </button>
+      <!-- more command buttons here -->
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-command-column title="Command">
+    <!-- Changes -->
+    <ng-template kendoGridCellTemplate>
+      <button kendoGridEditCommand>Edit</button>
+      <button kendoGridSaveCommand>Save</button>
+      <button kendoGridRemoveCommand>Delete</button>
+      <button kendoGridCancelCommand class="btnDel">Cancel</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>
+
+<router-outlet></router-outlet>

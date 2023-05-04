@@ -1,0 +1,122 @@
+
+<div class="d-flex align-items-center page_header">
+  <div class="page_title  min-wleftheader">
+      <h4><b>Pass Details</b></h4>
+  </div> 
+  <div>
+    <button kendoButton ><a href="/dashboard"> Go To Dashboard</a></button>
+  </div>
+</div>
+<kendo-grid [kendoGridBinding]="gridData" [pageable]="true" [pageSize]="10" [sortable]="true" [groupable]="true"
+  (dataStateChange)="onStateChange()" (add)="addHandler($event)" (edit)="editHandler($event)" 
+  (cancel)="cancelHandler($event)" (save)="saveHandler($event)" (remove)="removeHandler($event)" [navigable]="true">
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+    <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+    <button kendoGridAddCommand>Add new</button>
+  </ng-template>
+
+<!-- 
+<kendo-grid-column title="Actions" [width]="100">
+  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+    <button class="k-button" (click)="printP($event)" >Print </button>
+  </ng-template>
+</kendo-grid-column> -->
+
+<kendo-grid-column title="Details">
+  <ng-template kendoGridCellTemplate let-dataItem>
+    <button class="k-button" (click)="showDetails(dataItem)">Print</button>
+  </ng-template>
+</kendo-grid-column>
+
+
+  <kendo-grid-column field="strOwnerName" editor="text" title="Owner Name"></kendo-grid-column>
+  <kendo-grid-column field="strOwnerAddress" editor="text" title="Owner Address"></kendo-grid-column>
+  <kendo-grid-column field="strOwnerMobileNo" editor="text" title="MobileNo"></kendo-grid-column>
+  <kendo-grid-column field="strVehicleregNo" editor="text" title="Vehicle Reg No"></kendo-grid-column>
+  <kendo-grid-column field="strvehicleMakeModel" editor="text" title="Vehicle Model"></kendo-grid-column>
+  <kendo-grid-column field="strVehicleType_name" editor="text" title="VehicleType">
+    <ng-template kendoGridEditTemplate>
+      <kendo-dropdownlist [data]="dataVehicle" [value]="selectedType" [defaultItem]="defaultVehicleType"
+        textField="vehicleType" valueField="vehicleTypeID" (valueChange)="handleCategoryChange($event)">
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="dtepassvalidfrom" editor="text" title="Pass Valid From"></kendo-grid-column>
+  <kendo-grid-column field="dtepassvalidTo" editor="text" title="Pass Valid To"></kendo-grid-column>
+  <kendo-grid-column field="strpassvalidity" editor="text" title="Pass validity"></kendo-grid-column>
+  <kendo-grid-column field="strParkingArea" editor="text" title="Parking Area">
+    <ng-template kendoGridEditTemplate>
+      <kendo-dropdownlist [data]="dataArea" [value]="selectedArea" [defaultItem]="defaultArea" textField="AreaName"
+        valueField="AreaID" (valueChange)="handleAreaChange($event)">
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="decTotalpayableAmount" editor="text" title="Total Amount"></kendo-grid-column>
+  <kendo-grid-column field="PassIssuedatetime" editor="text" title="Pass Issued"></kendo-grid-column>
+  <kendo-grid-column field="LastUpdateddatetime" editor="text" title="Last Updated"></kendo-grid-column>
+  <kendo-grid-column field="Status" editor="text" title="Status"></kendo-grid-column>
+  
+
+  <kendo-grid-excel fileName="PassDetails.xlsx">
+    
+    
+  <kendo-excelexport-column field="strOwnerName" editor="text" title="Owner Name"></kendo-excelexport-column>
+  <kendo-excelexport-column field="strOwnerAddress" editor="text" title="Owner Address"></kendo-excelexport-column>
+  <kendo-excelexport-column field="strOwnerMobileNo" editor="text" title="MobileNo"></kendo-excelexport-column>
+  <kendo-excelexport-column field="strVehicleregNo" editor="text" title="Vehicle Reg No"></kendo-excelexport-column>
+  <kendo-excelexport-column field="strvehicleMakeModel" editor="text" title="Vehicle Model"></kendo-excelexport-column>
+  <kendo-excelexport-column field="strVehicleType_name" editor="text" title="VehicleType"></kendo-excelexport-column>
+  <kendo-excelexport-column field="dtepassvalidfrom" editor="text" title="Pass Valid From"></kendo-excelexport-column>
+  <kendo-excelexport-column field="dtepassvalidTo" editor="text" title="Pass Valid To"></kendo-excelexport-column>
+  <kendo-excelexport-column field="strpassvalidity" editor="text" title="Pass validity"></kendo-excelexport-column>
+  <kendo-excelexport-column field="strParkingArea" editor="text" title="Parking Area"></kendo-excelexport-column>
+  <kendo-excelexport-column field="decTotalpayableAmount" editor="text" title="Total Amount"></kendo-excelexport-column>
+  <kendo-excelexport-column field="PassIssuedatetime" editor="text" title="Pass Issued"></kendo-excelexport-column>
+  <kendo-excelexport-column field="LastUpdateddatetime" editor="text" title="Last Updated"></kendo-excelexport-column>
+  <kendo-excelexport-column field="Status" editor="text" title="Status"></kendo-excelexport-column>
+  
+  
+
+  </kendo-grid-excel>
+  <kendo-grid-pdf fileName="PassDetails.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+
+
+   
+  <kendo-grid-column field="strOwnerName" editor="text" title="Owner Name"></kendo-grid-column>
+  <kendo-grid-column field="strOwnerAddress" editor="text" title="Owner Address"></kendo-grid-column>
+  <kendo-grid-column field="strOwnerMobileNo" editor="text" title="MobileNo"></kendo-grid-column>
+  <kendo-grid-column field="strVehicleregNo" editor="text" title="Vehicle Reg No"></kendo-grid-column>
+  <kendo-grid-column field="strvehicleMakeModel" editor="text" title="Vehicle Model"></kendo-grid-column>
+  <kendo-grid-column field="strVehicleType_name" editor="text" title="VehicleType"></kendo-grid-column>
+  <kendo-grid-column field="dtepassvalidfrom" editor="text" title="Pass Valid From"></kendo-grid-column>
+  <kendo-grid-column field="dtepassvalidTo" editor="text" title="Pass Valid To"></kendo-grid-column>
+  <kendo-grid-column field="strpassvalidity" editor="text" title="Pass validity"></kendo-grid-column>
+  <kendo-grid-column field="strParkingArea" editor="text" title="Parking Area"></kendo-grid-column>
+  <kendo-grid-column field="decTotalpayableAmount" editor="text" title="Total Amount"></kendo-grid-column>
+  <kendo-grid-column field="PassIssuedatetime" editor="text" title="Pass Issued"></kendo-grid-column>
+  <kendo-grid-column field="LastUpdateddatetime" editor="text" title="Last Updated"></kendo-grid-column>
+  <kendo-grid-column field="Status" editor="text" title="Status"></kendo-grid-column>
+
+
+    <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+    <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+      <div class="page-template">
+        <div class="header">
+          <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+
+        </div>
+
+      </div>
+    </ng-template>
+  </kendo-grid-pdf>
+  <kendo-grid-command-column title="command" [width]="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridEditCommand [primary]="true">Edit</button>
+      <button kendoGridRemoveCommand>Remove</button>
+      <!-- <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button> -->
+      <button kendoGridSaveCommand>{{ isNew ? 'Add' : 'Update' }}</button>
+      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid> 

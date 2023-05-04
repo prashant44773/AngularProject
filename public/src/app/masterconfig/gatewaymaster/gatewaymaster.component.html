@@ -1,0 +1,96 @@
+
+<div class="d-flex align-items-center page_header">
+  <div class="page_title  min-wleftheader">
+      <h4><b>GateWay Master</b></h4>
+  </div> 
+  <div>
+    <button kendoButton ><a href="/dashboard"> Go To Dashboard</a></button>
+  </div>
+</div>
+<kendo-grid [kendoGridBinding]="gridData" [pageable]="true" [pageSize]="10" [sortable]="true" [groupable]="true"
+  (dataStateChange)="onStateChange($event)" (add)="addHandler($event)" (edit)="editHandler($event)"
+  (cancel)="cancelHandler($event)" (save)="saveHandler($event)" (remove)="removeHandler($event)" [navigable]="true">
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+    <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+    <button kendoGridAddCommand>Add new</button>
+  </ng-template>
+
+  <kendo-grid-column field="strGatewayName" editor="text" title="GateWay Name"></kendo-grid-column>
+  <kendo-grid-column field="intGateWaySeqID" editor="numeric" title="Gateway Seq No"></kendo-grid-column>
+  <kendo-grid-column field="strGatewayID" editor="text" title="Gateway ID"></kendo-grid-column>
+  <kendo-grid-column field="ParkingLot" editor="text" title="Parking Lot">
+    <ng-template kendoGridEditTemplate>
+      <kendo-dropdownlist [data]="LotList" [value]="selectedLot" [defaultItem]="defaultLot"
+        textField="strParkingLotName" valueField="tParkLotID')" (valueChange)="handleLotChange($event)">
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="strLocationName" editor="text" title="Location Name"></kendo-grid-column>
+  
+  <kendo-grid-column [field]="'Status'">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <span>{{dataItem.bDisconnected? "Active" : "Deactive"}}</span>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column [field]="'Activate/Deactivate'">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <button kendoButton
+        (click)="ActivateDeActivate(dataItem)">{{ dataItem.bActive ? 'Click To Deactivate' : 'Click To Activate' }}</button>
+    </ng-template>
+  </kendo-grid-column>
+  
+
+  <kendo-grid-excel fileName="GATEWAY.xlsx">
+    
+    
+  <kendo-excelexport-column field="strGatewayName" editor="text" title="PIS Device"></kendo-excelexport-column>
+  <kendo-excelexport-column field="intGateWaySeqID" editor="numeric" title="PIS IMEI"></kendo-excelexport-column>
+  <kendo-excelexport-column field="strGatewayID" editor="text" title="PIS Make"></kendo-excelexport-column>
+  <kendo-excelexport-column field="ParkingLot" editor="text" title="PIS Model"></kendo-excelexport-column>
+  <kendo-excelexport-column field="strLocationName" editor="text" title="PIS Seq ID"></kendo-excelexport-column>
+  
+    <kendo-excelexport-column [excelexport]="'Status'">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{dataItem.bDisconnected? "Active" : "Deactive"}}</span>
+      </ng-template>
+    </kendo-excelexport-column>
+
+  </kendo-grid-excel>
+  <kendo-grid-pdf fileName="GATEWAY.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+
+
+   
+  <kendo-grid-column field="strGatewayName" editor="text" title="PIS Device"></kendo-grid-column>
+  <kendo-grid-column field="intGateWaySeqID" editor="numeric" title="PIS IMEI"></kendo-grid-column>
+  <kendo-grid-column field="strGatewayID" editor="text" title="PIS Make"></kendo-grid-column>
+  <kendo-grid-column field="ParkingLot" editor="text" title="PIS Model"></kendo-grid-column>
+  <kendo-grid-column field="strLocationName" editor="text" title="PIS Seq ID"></kendo-grid-column>
+  
+    <kendo-grid-column [field]="'Status'">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{dataItem.bDisconnected? "Active" : "Deactive"}}</span>
+      </ng-template>
+    </kendo-grid-column>
+    
+    <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+    <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+      <div class="page-template">
+        <div class="header">
+          <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+
+        </div>
+
+      </div>
+    </ng-template>
+  </kendo-grid-pdf>
+  <kendo-grid-command-column title="command" [width]="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridEditCommand [primary]="true">Edit</button>
+      
+      <!-- <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button> -->
+      <button kendoGridSaveCommand>{{ isNew ? 'Add' : 'Update' }}</button>
+      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid> 

@@ -1,0 +1,35 @@
+
+<div>
+    <div class="d-flex align-items-center page_header">
+
+        <div class="page_title  min-wleftheader">
+            <b>Dashboard</b>
+            <kendo-chart>
+                <kendo-chart-title text="Hourly Occupancy"></kendo-chart-title>
+                <kendo-chart-category-axis>
+                    <kendo-chart-category-axis-item [categories]="OutTime" [title]="{ text: 'Out Time' }">
+                    </kendo-chart-category-axis-item>
+                </kendo-chart-category-axis>
+                <kendo-chart-series>
+
+                    <kendo-chart-series-item type="line" [style]="style" [data]="FourWheeler">
+                    </kendo-chart-series-item>
+
+                    <kendo-chart-series-item type="line" [style]="style" [data]="TwoWheeler">
+                    </kendo-chart-series-item>
+                </kendo-chart-series>
+            </kendo-chart>
+        </div>
+
+
+    </div>
+</div>
+<kendo-dropdownlist style="width: fit-content;" [data]="dataArea" [value]="selectedArea" [defaultItem]="defaultArea"
+    textField="AreaName" valueField="AreaID" (valueChange)="handleAreaChange($event)">
+</kendo-dropdownlist>
+
+
+<kendo-dropdownlist style="width: fit-content;" [disabled]="isDisabledLot" [defaultItem]="defaultLot"
+    [data]="dataResultLot" [value]="selectedLot" textField="LotName" valueField="LotID"
+    (valueChange)="handleLotChange($event)" >
+</kendo-dropdownlist> 

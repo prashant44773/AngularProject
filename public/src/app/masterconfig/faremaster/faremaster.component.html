@@ -1,0 +1,135 @@
+<div class="d-flex align-items-center page_header">
+  <div class="page_title  min-wleftheader">
+      <h4><b>Fare Master</b></h4>
+  </div> 
+  <div>
+    <button kendoButton ><a href="/dashboard"> Go To Dashboard</a></button>
+  </div>
+</div>
+<div>
+  
+</div>
+<kendo-grid [kendoGridBindixng]="gridData" [pageable]="true" [pageSize]="10" [sortable]="true" [groupable]="true"
+  (dataStateChange)="onStateChange()" (add)="addHandler($event)" (edit)="editHandler($event)"
+  (cancel)="cancelHandler($event)" (save)="saveHandler($event)" (remove)="removeHandler($event)" [navigable]="true">
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+    <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+    <button kendoGridAddCommand>Add new</button>
+  </ng-template>
+
+  <kendo-grid-column field="intFromValue" editor="numeric" title="From Time"></kendo-grid-column>
+  <kendo-grid-column field="intToValue" editor="numeric" title="To Time"></kendo-grid-column>
+  <kendo-grid-column field="strVehicleType" editor="text" title="Vehicle Type">
+    <ng-template kendoGridEditTemplate>
+      <kendo-dropdownlist [data]="dataVehicle" [value]="selectedType" [defaultItem]="defaultVehicleType"
+        textField="vehicleType" valueField="vehicleTypeID" (valueChange)="handleCategoryChange($event)">
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+
+
+  <kendo-grid-column field="strAreaName" editor="text" title="Area Name">
+    <ng-template kendoGridEditTemplate>
+      <kendo-dropdownlist [data]="dataArea" [value]="selectedArea" [defaultItem]="defaultArea" textField="AreaName"
+        valueField="AreaID" (valueChange)="handleAreaChange($event)">
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column field="strParkingLotName" editor="text" title="Lot Name">
+    <ng-template kendoGridEditTemplate>
+
+      <kendo-dropdownlist 
+        [disabled]="isDisabledLot" 
+        [defaultItem]="defaultLot"
+        [data]="dataResultLot" 
+        [value]="selectedLot" 
+        textField="LotName" 
+        valueField="LotID"
+        (valueChange)="handleLotChange($event)"
+      >
+      </kendo-dropdownlist>
+    </ng-template>
+
+  </kendo-grid-column>
+
+
+
+
+  <kendo-grid-column field="intFare" editor="numeric" title="Fare (Rs.)"></kendo-grid-column>
+  <kendo-grid-column field="strHourlyFareName" editor="text" title="Hourly Fare Name"></kendo-grid-column>
+
+  <kendo-grid-column [field]="'Status'">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <span>{{dataItem.bActive? "Active" : "Deactive"}}</span>
+    </ng-template>
+  </kendo-grid-column>
+
+  <kendo-grid-column [field]="'Button'">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <button kendoButton
+        (click)="ActivateDeActivate(dataItem)">{{ dataItem.bActive ? 'Click To Deactivate' : 'Click To Activate' }}</button>
+    </ng-template>
+  </kendo-grid-column>
+
+
+  <kendo-grid-excel fileName="Fare Matrix.xlsx">
+
+    <!-- <kendo-excelexport-column field="strPISDeviceID" editor="text" title="PIS Device"></kendo-excelexport-column> -->
+    <kendo-excelexport-column field="intFromValue" editor="text" title="From Time"></kendo-excelexport-column>
+    <kendo-excelexport-column field="intToValue" editor="text" title="To Time"></kendo-excelexport-column>
+    <kendo-excelexport-column field="strVehicleType" editor="text" title="Vehicle Type"></kendo-excelexport-column>
+    <kendo-excelexport-column field="strParkingLotName" editor="text" title="Lot Name"></kendo-excelexport-column>
+    <kendo-excelexport-column field="strAreaName" editor="text" title="Area Name"></kendo-excelexport-column>
+    <kendo-excelexport-column field="intFare" editor="text" title="Fare (Rs.)"></kendo-excelexport-column>
+    <kendo-excelexport-column field="strHourlyFareName" editor="text" title="Hourly Fare Name">
+    </kendo-excelexport-column>
+
+    <kendo-excelexport-column [field]="'Status'">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{dataItem.bActive? "Active" : "Deactive"}}</span>
+      </ng-template>
+    </kendo-excelexport-column>
+
+  </kendo-grid-excel>
+  <kendo-grid-pdf fileName="Fare Matrix.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+    <kendo-grid-column field="intFromValue" editor="text" title="From Time"></kendo-grid-column>
+    <kendo-grid-column field="intToValue" editor="text" title="To Time"></kendo-grid-column>
+    <kendo-grid-column field="strVehicleType" editor="text" title="Vehicle Type"></kendo-grid-column>
+    <kendo-grid-column field="strParkingLotName" editor="text" title="Lot Name"></kendo-grid-column>
+    <kendo-grid-column field="strAreaName" editor="text" title="Area Name"></kendo-grid-column>
+    <kendo-grid-column field="intFare" editor="text" title="Fare (Rs.)"></kendo-grid-column>
+    <kendo-grid-column field="strHourlyFareName" editor="text" title="Hourly Fare Name"></kendo-grid-column>
+
+    <kendo-grid-column [field]="'Status'">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{dataItem.bActive? "Active" : "Deactive"}}</span>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+    <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+      <div class="page-template">
+        <div class="header">
+          <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+
+        </div>
+
+      </div>
+    </ng-template>
+  </kendo-grid-pdf>
+
+
+  <kendo-grid-command-column title="command" [width]="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridEditCommand [primary]="true">Edit</button>
+      <button kendoGridRemoveCommand>Remove</button>
+      <!-- <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button> -->
+      <button kendoGridSaveCommand>{{ isNew ? 'Add' : 'Update' }}</button>
+      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+    </ng-template>
+  </kendo-grid-command-column>
+
+
+</kendo-grid>

@@ -1,0 +1,185 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<div class="d-flex align-items-center page_header">
+    <div class="page_title  min-wleftheader">
+        <h4><b>Operational Dashboard</b></h4>
+    </div> 
+    <div>
+      <button kendoButton ><a href="/dashboard"> Go To Dashboard</a></button>
+    </div>
+  </div>
+  <div>
+<div class="d-flex align-items-center page_header">
+    <div class="page_title  min-wleftheader">
+        
+        
+        <ng-container>
+        <kendo-dropdownlist [popupSettings]="{
+                width: 450,
+                height: 150
+            }" style="width: 350px;" [data]="dataArea" [value]="selectedArea" [defaultItem]="defaultArea"
+            textField="AreaName" valueField="AreaID" (valueChange)="handleAreaChange($event)">
+        </kendo-dropdownlist>
+    </ng-container>
+    <ng-container>
+        <kendo-datepicker [max]="max" style="width: 350px;" (valueChange)="onDateChange($event)" [value]="value">
+        </kendo-datepicker>
+    </ng-container>
+    </div>
+</div>
+<table>
+    <ng-container>
+        <!-- <ng-container *ngIf="showArea.show == true"> -->
+        <ng-container *ngFor="let Area of Areadata">
+
+            <tr *ngFor="let showArea of AreaShow" style="color:blue;" id="AreaID{{Area.intAreaID}}">
+                <ng-container *ngIf="showArea.show == true && showArea.AreaID == Area.intAreaID">
+
+                    <td>
+                        <div> {{Area.strAreaName}} </div>
+                    </td>
+                    <td>
+                        <div>{{Area.intTotalIssuedTickets}}</div>
+                        <div>Total Issued Tickets</div>
+                    </td>
+                    <td>
+                        <div>₹{{Area.intTotalFareAmount}}</div>
+                        <div>Total Collections</div>
+                    </td>
+                    <td>
+                        <div>{{Area.intTotalFourWheelCountLot}}</div>
+                        <div>4-wheeler issued ticket</div>
+                    </td>
+                    <td>
+                        <div>₹{{Area.intTotalFourWheelFareAmountLot}}</div>
+                        <div>4-wheeler Collections</div>
+                    </td>
+                    <td>
+                        <div>{{Area.intTotalTwoWheelCountLot}}</div>
+                        <div>4-wheeler issued ticket</div>
+                    </td>
+                    <td>
+                        <div>₹{{Area.intTotalTwoWheelFareAmountLot}}</div>
+                        <div>2-wheeler Collections</div>
+                    </td>
+                    <td>
+
+                        <button (click)="DropDownupdown(Area.intAreaID)">
+                            <ng-container *ngFor="let ParkShow of ParkingShow">
+                                <i *ngIf="ParkShow.AreaID == Area.intAreaID && ParkShow.show == true"
+                                    class="fa fa-chevron-circle-up" style="font-size:24px"></i>
+
+                                <i *ngIf="ParkShow.AreaID == Area.intAreaID && ParkShow.show == false"
+                                    class="fa fa-chevron-circle-down" style="font-size:24px"></i>
+                            </ng-container>
+
+                        </button>
+
+                    </td>
+                </ng-container>
+
+            </tr>
+
+            <tr *ngFor="let Park of ParkingData" id="ParkID{{Park.intParkingLotID}}">
+                <ng-container *ngFor="let ParkShow of ParkingShow" let even = 1>
+                    <ng-container
+                        *ngIf="Park.intAreaID === Area.intAreaID && ParkShow.AreaID == Area.intAreaID && ParkShow.show == true">
+
+                        <td >
+                            <div> {{Park.strParkingLotName}} </div>
+                        </td>
+                        <td>
+                            <div>{{Park.strShiftName}}</div>
+                        </td>
+                        <td>
+                            <div>Operator Details</div>
+                            <div>{{Park.strUserName}}</div>
+                            <div>Assigned Operator</div>
+                        </td>
+                        <td>
+                            <div>Four Wheel Tickets</div>
+                            <div>{{Park.intTotalFourWheelCountLot}}</div>
+                            <div>Four Wheel Issued Tickets</div>
+                        </td>
+                        <td>
+                            <div>Four Wheel Collection</div>
+
+                            <div>{{Park.intTotalFourWheelFareAmountLot}}</div>
+                            <div>Four Wheel Collection</div>
+                        </td>
+                        <td>
+                            <div>Two Wheel Tickets</div>
+
+                            <div>{{Park.intTotalTwoWheelCountLot}}</div>
+                            <div>Two Wheel Issued Tickets</div>
+                        </td>
+                        <td>
+                            <div>Two Wheel Collection</div>
+
+                            <div>{{Park.intTotalTwoWheelFareAmountLot}}</div>
+                            <div>Two Wheel Collection</div>
+                        </td>
+                        <td>
+                            <div>Pass Details</div>
+                            <div>{{Park.intFourTotalPassCount}} / {{Park.intTotalPassCount}} </div>
+                            <div>Pass (4-wheeler/2-wheeler)</div>
+                        </td>
+                    </ng-container>
+                </ng-container>
+
+            </tr>
+        </ng-container>
+        <!-- </ng-container> -->
+    </ng-container>
+
+
+
+
+</table>
+<!-- 
+<table>
+    <tr *ngFor="let Park of ParkingData" id="ParkID{{Park.intParkingLotID}}">
+
+        <td>
+            <div> {{Park.strParkingLotName}} </div>
+        </td>
+        <td>
+            <div>{{Park.strShiftName}}</div>
+        </td>
+        <td>
+            <div>Operator Details</div>
+            <div>{{Park.strUserName}}</div>
+            <div>Assigned Operator</div>
+        </td>
+        <td>
+            <div>Four Wheel Tickets</div>
+            <div>{{Park.intTotalFourWheelCountLot}}</div>
+            <div>Four Wheel Issued Tickets</div>
+        </td>
+        <td>
+            <div>Four Wheel Collection</div>
+
+            <div>{{Park.intTotalFourWheelFareAmountLot}}</div>
+            <div>Four Wheel Collection</div>
+        </td>
+        <td>
+            <div>Two Wheel Tickets</div>
+
+            <div>{{Park.intTotalTwoWheelCountLot}}</div>
+            <div>Two Wheel Issued Tickets</div>
+        </td>
+        <td>
+            <div>Two Wheel Collection</div>
+
+            <div>{{Park.intTotalTwoWheelFareAmountLot}}</div>
+            <div>Two Wheel Collection</div>
+        </td>
+        <td>
+            <div>Pass Details</div>
+            <div>{{Park.intFourTotalPassCount}} / {{Park.intTotalPassCount}} </div>
+            <div>Pass (4-wheeler/2-wheeler)</div>
+        </td>
+    </tr>
+
+</table> -->

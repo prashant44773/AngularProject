@@ -1,0 +1,13 @@
+
+
+kendo-drawer-content {
+    padding: 20px;    
+}
+
+kendo-chart{
+    z-index: 1;
+}
+
+#PageContent{
+    z-index: 2;
+}

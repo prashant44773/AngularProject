@@ -1,0 +1,86 @@
+<div class="d-flex align-items-center page_header">
+    <div class="page_title  min-wleftheader">
+        <h4><b>Setting Master</b></h4>
+    </div> 
+  </div>
+  <kendo-grid [kendoGridBinding]="gridData" [pageable]="true" [pageSize]="10" [sortable]="true" [groupable]="true"
+    (dataStateChange)="onStateChange($event)" (add)="addHandler($event)" (edit)="editHandler($event)"
+    (cancel)="cancelHandler($event)" (save)="saveHandler($event)" (remove)="removeHandler($event)" [navigable]="true">
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+      <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+      <button kendoGridAddCommand>Add new</button>
+    </ng-template>
+  
+    <kendo-grid-column field="strSettingKey" editor="text" title="Setting Key"></kendo-grid-column>
+    <kendo-grid-column field="strSettingValue" editor="text" title="Setting Value"></kendo-grid-column>
+    <kendo-grid-column field="strDescription" editor="text" title="Description"></kendo-grid-column>
+    
+  
+    <kendo-grid-column [field]="'Status'">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{dataItem.bActive? "Active" : "Deactive"}}</span>
+      </ng-template>
+    </kendo-grid-column>
+  
+    <kendo-grid-column [field]="'Button'">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <button kendoButton
+          (click)="ActivateDeActivate(dataItem)">{{ dataItem.bActive ? 'Click To Deactivate' : 'Click To Activate' }}</button>
+      </ng-template>
+    </kendo-grid-column>
+  
+  
+    <kendo-grid-excel fileName="Fare Matrix.xlsx">
+  
+      <!-- <kendo-excelexport-column field="strPISDeviceID" editor="text" title="PIS Device"></kendo-excelexport-column> -->
+      <kendo-excelexport-column field="strSettingKey" editor="text" title="Setting Key"></kendo-excelexport-column>
+      <kendo-excelexport-column field="strSettingValue" editor="text" title="Setting Value"></kendo-excelexport-column>
+      <kendo-excelexport-column field="strDescription" editor="text" title="Description"></kendo-excelexport-column>
+      
+    
+      <kendo-excelexport-column [field]="'Status'">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span>{{dataItem.bActive? "Active" : "Deactive"}}</span>
+        </ng-template>
+      </kendo-excelexport-column>
+  
+    </kendo-grid-excel>
+    <kendo-grid-pdf fileName="Fare Matrix.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+        
+    <kendo-grid-column field="strSettingKey" editor="numeric" title="Setting Key"></kendo-grid-column>
+    <kendo-grid-column field="strSettingValue" editor="numeric" title="Setting Value"></kendo-grid-column>
+    <kendo-grid-column field="strDescription" editor="numeric" title="Description"></kendo-grid-column>
+    
+  
+      <kendo-grid-column [field]="'Status'">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span>{{dataItem.bActive? "Active" : "Deactive"}}</span>
+        </ng-template>
+      </kendo-grid-column>
+  
+      <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+      <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+        <div class="page-template">
+          <div class="header">
+            <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+  
+          </div>
+  
+        </div>
+      </ng-template>
+    </kendo-grid-pdf>
+  
+  
+    <kendo-grid-command-column title="command" [width]="220">
+      <ng-template kendoGridCellTemplate let-isNew="isNew">
+        <button kendoGridEditCommand [primary]="true">Edit</button>
+        <button kendoGridRemoveCommand>Remove</button>
+        <!-- <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button> -->
+        <button kendoGridSaveCommand>{{ isNew ? 'Add' : 'Update' }}</button>
+        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+      </ng-template>
+    </kendo-grid-command-column>
+  
+  
+  </kendo-grid>

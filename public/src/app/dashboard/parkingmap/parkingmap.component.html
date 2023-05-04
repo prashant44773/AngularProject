@@ -1,0 +1,23 @@
+
+<!-- 
+
+    <div #map id="map" ></div>
+
+<kendo-dropdownlist style="width: fit-content;" [data]="dataArea" [value]="selectedArea" [defaultItem]="defaultArea"
+    textField="AreaName" valueField="AreaID" (valueChange)="handleAreaChange($event)">
+</kendo-dropdownlist>
+
+
+<kendo-dropdownlist style="width: fit-content;" [disabled]="isDisabledLot" [defaultItem]="defaultLot"
+    [data]="dataResultLot" [value]="selectedLot" textField="LotName" valueField="LotID"
+    (valueChange)="handleLotChange($event)">
+</kendo-dropdownlist> -->
+
+<app-jsmap
+[zoom]="zoom"
+[lat]="lat"
+[lng]="lng"
+></app-jsmap>
+<!-- <app-mapposition
+(notify)="handleInputChange($event)"
+></app-mapposition> -->
